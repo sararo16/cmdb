@@ -21,7 +21,7 @@ export class Pelicula {
         this.generos = generos;
     
     //iniciamos el array de puntuaciones vacio
-    this.puntuaciones = [];
+    this._puntuaciones = [];
     }
 
     //id solo lectura
@@ -93,7 +93,7 @@ export class Pelicula {
     //calcula y devuelve la puntuacion media de la pelicula
      /** @returns {number|string } media redondeada o '-'*/
 
-     get puntacion (){
+     get puntuacion (){
         if (this._puntuaciones.length === 0) return '-';
         const suma = this._puntuaciones.reduce((a, b) => a + b, 0);
         return Math.round(suma / this._puntuaciones.length);
