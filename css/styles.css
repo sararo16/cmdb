@@ -1,99 +1,117 @@
 
+/* Importa la fuente Montserrat desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-body{
-    margin:0;
-    font-family:'Montserrat', sans-serif;
-    background-color: #1c1c1d;
-    color: #f0f0f0;
-    line-height: 1.6;
+
+/* Estilos generales del cuerpo de la página */
+body {
+    margin: 0; /* Elimina márgenes por defecto */
+    font-family: 'Montserrat', sans-serif; /* Aplica la fuente importada */
+    background-color: #1c1c1d; /* Fondo oscuro */
+    color: #f0f0f0; /* Texto claro */
+    line-height: 1.6; /* Espaciado entre líneas */
 }
 
-header{
-    background-color: #000;
-    padding: 2rem 1rem;
-    text-align: center;
-    border-bottom: 1px solid #ffd700;
+/* Encabezado principal */
+header {
+    background-color: #000; /* Fondo negro */
+    padding: 2rem 1rem; /* Espaciado interno */
+    text-align: center; /* Centra el contenido */
+    border-bottom: 1px solid #ffd700; /* Línea dorada  */
 }
 
-h1{
-    margin: 0;
-    font-size: 2rem;
-    color: #e0d27f;
+/* Título principal */
+h1 {
+    margin: 0; /* Elimina margen superior/inferior */
+    font-size: 2rem; /* Tamaño grande para destacar */
+    color: #e0d27f; /* Color dorado suave */
 }
 
-nav{
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+/* Menú de navegación */
+nav {
+    margin-top: 1rem; /* Separación respecto al título */
+    display: flex; /* Distribuye los botones  */
+    justify-content: center; /* Centra los botones */
+    gap: 1rem; /* Espacio entre botones */
 }
 
-button{
-    background-color: transparent;
-    color: #e0d27f;
-    border: 1px solid #e0d27f;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+/* Estilo base para todos los botones */
+button {
+    background-color: transparent; /* Fondo transparente */
+    color: #e0d27f; /* Texto dorado */
+    border: 1px solid #e0d27f; /* Borde dorado */
+    padding: 0.5rem 1rem; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de texto estándar */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    border-radius: 4px; /* Bordes redondeados */
+    transition: all 0.3s ease; /* Animación suave al opasar por encima */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra en los botones */
 }
 
-button:hover{
-    background-color: #e0d27f;
-    color: #1c1c1d;
+/* Efecto al pasar el ratón sobre los botones */
+button:hover {
+    background-color: #e0d27f; /* Fondo dorado */
+    color: #1c1c1d; /* Texto oscuro para contraste */
 }
 
-main{
-    padding: 2rem;
-    max-width: 800px;
-    margin: auto;
+/* Contenedor principal de contenido dinámico */
+main {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);   /* Sombras en el contenido */  
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 2rem; /* Espaciado interno */
+    max-width: 800px; /* Ancho máximo para buena lectura */
+    margin: auto; /* Centrado horizontal */
 }
 
-form{
-    display:grid;
-    gap:1rem;
+/* Estilo para formularios */
+form {
+    display: grid; /* Usa grid  */
+    gap: 1rem; /* Espacio entre campos */
 }
 
-input,select{
-    padding: 0.6rem;
-    border:none;
-    border-bottom: 1px solid #444;
-    background-color: #1e1e1e;
-    color: #f0f0f0;
+/* Campos de entrada y selectores */
+input, select {
+    padding: 0.6rem; /* Espaciado interno */
+    border: none; /* Sin borde exterior */
+    border-bottom: 1px solid #444; /* Línea inferior  */
+    background-color: #1e1e1e; /* Fondo oscuro */
+    color: #f0f0f0; /* Texto claro */
 }
 
-table{
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 2rem;
+/* Tabla de listado de películas */
+table {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    border-collapse: collapse; /* Elimina espacios entre celdas */
+    margin-top: 2rem; /* Separación respecto al contenido anterior */
 }
 
-th,td{
-    padding: 0.8rem;
-    border-bottom: 1px solid #333;
-    text-align: left;
+/* Celdas de la tabla */
+th, td {
+    padding: 1rem;; /* Espaciado interno */
+    border-bottom: 1px solid #333; /* Línea divisoria entre filas */
+    text-align: left; /* Alineación del texto a la izquierda */
 }
 
-th{
-    color: #ffd700;
-    font-weight: normal;
+/* Encabezados de la tabla */
+th {
+    color: #ffd700; /* Color dorado */
+    font-weight: normal; /* Peso de fuente normal */
 }
 
-td button{
-    background-color: #ffd700;
-    color: #000;
-    border: none;
-    padding: 0.3rem 0.6rem;
-    border-radius: 3px;
-    cursor: pointer
+/* Botón de votar dentro de la tabla */
+td button {
+    background-color: #ffd700; /* Fondo dorado */
+    color: #000; /* Texto negro */
+    border: none; /* Sin borde */
+    padding: 0.3rem 0.6rem; /* Espaciado interno */
+    border-radius: 3px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor tipo botón */
 }
 
-footer{
-    text-align:center;
-    padding: 1rem;
-    font-size: 0.9rem;
-    color:#888;
-    border-top: 1px solid #333;
+/* Pie de página */
+footer {
+    text-align: center; /* Centra el texto */
+    padding: 1rem; /* Espaciado interno */
+    font-size: 0.9rem; /* Tamaño de texto más pequeño */
+    color: #888; /* Color gris claro */
+    border-top: 1px solid #333; /* Línea superior sutil */
 }
-

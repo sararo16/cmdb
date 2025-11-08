@@ -1,5 +1,6 @@
-import {Pelicula} from './pelicula.js';
-import {Genero} from './genero.js';
+import {Pelicula} from './pelicula.js'; //importa clase pelicula
+import {Genero} from './genero.js'; //importa clase genero
+//importamos funciones para guardar/cargar datos en localStorage
 import {
     guardarPeliculas,
     cargarPeliculas,
@@ -10,18 +11,18 @@ import {
 
 //inicializar datos (cargar por defecto si localStorage esta vacio)
 inicializarDatos();
-
-
 let peliculas = cargarPeliculas();
 let generos = cargarGeneros();
 
-//Asignar eventos a los botones del menu
+//Asignar eventos de navegación a los botones del menu
 document.getElementById('btnGeneros').addEventListener('click', mostrarGeneros);
 document.getElementById('btnPeliculas').addEventListener('click', mostrarFormularioPeliculas);
 document.getElementById('btnListado').addEventListener('click', mostrarListadoPeliculas);
 
-
-//mostrar formulario para gestionar generos (CRUD)
+/**
+ * Muestra el formulario para añadir géneros (CRUD)
+ * Valida que el nombre no este vacio ni duplicado
+ */
 function mostrarGeneros(){
     const main=document.getElementById('contenido');
     main.innerHTML=`
@@ -38,67 +39,42 @@ function mostrarGeneros(){
 
     generos.forEach(g=>{
         const li=document.createElement('li');
-        li.innerHTML=`
-        ${g.id} - ${g.nombre}
-        <button class="editar" data-id="${g.id}">Editar</button>
-        <button class="eliminar" data-id="${g.id}">Eliminar</button>
-        `;
+        li.textContent=`${g.id} - ${g.nombre}`;
         ul.appendChild(li);
     });
 
-    //alta de genero
+    /**
+     * Evento para añadir un nuevo genero al enviar el formulario
+     */
     document.getElementById('form-genero').addEventListener('submit',e =>{
-        e.preventDefault();
+        e.preventDefault(); //evita que se recargue la pagina
         try{
-            const nombre=document.getElementById('nombre-genero').value|| 'Género desconocido';
+            const nombre=document.getElementById('nombre-genero').value.trim(); //lee el valor y lo limpia
+            //validaciones vacio y mismo nombre
+            if (!nombre) throw new Error('El nombre del género no puede estar vacío');
+
+            const existe=generos.some (g=>g.nombre.toLowerCase()===nombre.toLowerCase());
+            if (existe) throw new Error ('Ya existe un género con ese nombre');
+
+            //crea un nuevo objeto (genero), lo añade al array, lo guarda en localstorage y vuelve a llamar la funcion para refrescar la lista
             const nuevo=new Genero (nombre);
             generos.push (nuevo);
             guardarGeneros(generos);
             mostrarGeneros();
+
+        //si hay error se muestra con alert
         }catch(error){
             alert (error.message);
         }
     });
-
-
-    //editar genero
-    ul.querySelectorAll('.editar').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-            const id=parseInt(btn.dataset.id);
-            const genero=generos.find(g=>g.id===id);
-            const nuevoNombre=prompt('Introduce el nuevo nombre del género:', genero.nombre);
-            if(nuevoNombre && nuevoNombre.trim().length>0){
-                genero.nombre=nuevoNombre.trim();
-                guardarGeneros(generos);
-                mostrarGeneros();
-            }
-        });
-    });
-
-
-    //eliminar genero
-    ul.querySelectorAll('.eliminar').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = parseInt(btn.dataset.id);
-
-      // Evitar borrar géneros usados en películas
-      const enUso = peliculas.some(p => p.generos.includes(id));
-      if (enUso) {
-        alert('No se puede eliminar este género porque está asociado a alguna película.');
-        return;
-      }
-
-      if (confirm('¿Seguro que deseas eliminar este género?')) {
-        generos = generos.filter(g => g.id !== id);
-        guardarGeneros(generos);
-        mostrarGeneros();
-      }
-    });
-  });
 }
 
-//mostrar formulario para añadir peliculas
+/**
+ * Muestra el formulario para añadir una nueva película
+ * Valida los campos y evita títulos duplicados
+ */
 function mostrarFormularioPeliculas(){
+    //funcion que se ejecuta cuadno el usuario quiere añadir una nueva pelicula
     const main=document.getElementById('contenido');
     main.innerHTML=`
     <h2>Añadir nueva película</h2>
@@ -118,7 +94,9 @@ function mostrarFormularioPeliculas(){
         <button type="submit">Añadir película</button>
     </form>`;
 
+    //busca el select en el formulario
     const select=document.getElementById ('generos');
+    //recorre el array creando una opcion, pone el id, texto en nombre y se añade
     generos.forEach(g=>{
         const option=document.createElement('option');
         option.value=g.id;
@@ -126,27 +104,41 @@ function mostrarFormularioPeliculas(){
         select.appendChild(option);
     });
 
+    /**
+     * Evento para añadir una nueva pelicula al formulario
+     */
     document.getElementById('form-pelicula').addEventListener('submit', e=>{
-        e.preventDefault();
+        e.preventDefault();//evita que se recargue la pagina
+
         try{
             const titulo=document.getElementById('titulo').value;
-            const fecha=new Date(document.getElementById('fecha').value);
+            const fecha=new Date(document.getElementById('fecha').value); //convierte la fecha del input en un objeto date
             const popularidad=parseInt(document.getElementById('popularidad').value);
-            const seleccionados=Array.from(select.selectedOptions).map(opt=>parseInt(opt.value));
-            
+            const seleccionados=Array.from(select.selectedOptions).map(opt=>parseInt(opt.value)); //los generos seleccionados los comvierte en un array de IDs
+            //verifica si ya existe una pelicula con ese titulo
+            const existe=peliculas.some(p=>p.titulo.toLowerCase()===titulo.toLowerCase());
+            if (existe) throw new Error ('Ya existe una película con ese título');
+
+            //se crea una nueva instancia de la clase pelicula
             const nueva=new Pelicula(titulo, fecha, popularidad, seleccionados);
+            //añade la pelicula al array
             peliculas.push(nueva);
-            guardarPeliculas(peliculas);
+            guardarPeliculas(peliculas); //se guarda el array actualizado
             alert('Película añadida correctamente');
             mostrarListadoPeliculas();
+        //si ocurre un error se muestra con un alert
         }catch(error){
             alert(error.message);
         }
     });
 }
 
-//mostrar listado de peliculas
+    /**
+    * Muestra el listado de películas registradas
+    * Permite votar cada pelicula y actualiza la puntuacion media
+    */
 function mostrarListadoPeliculas(){
+    //inserta una tabla en el HTML para mostrar las peliculas
     const main=document.getElementById('contenido');
     main.innerHTML=`
     <h2>Listado de películas</h2>
@@ -166,17 +158,21 @@ function mostrarListadoPeliculas(){
         <tbody id="tabla-body"></tbody>
     </table>`;
 
+    //limpia el cuerpo de la tabla para volver a mostrarlo
     const tbody=document.getElementById('tabla-body');
     tbody.innerHTML='';
 
+    //por cada pelicula crea una fila en la tabla
     peliculas.forEach(p=>{
         const fila=document.createElement('tr');
 
+        //convierte los IDs de generos en nombres legibles, separados por comas
         const nombresGeneros=p.generos.map(id=>{
             const g=generos.find(gen=>gen.id===id);
             return g ? g.nombre : 'Desconocido';
         }).join(', ');
 
+        //se llena la fila con los datos de la pelicula
         fila.innerHTML=`
             <td>${p.id}</td>
             <td>${p.titulo}</td>
@@ -187,71 +183,33 @@ function mostrarListadoPeliculas(){
             <td>${p.numeroVotos}</td>
             <td>
             <button class="votar" data-id="${p.id}">Votar</button>
-            <button class="editar" data-id="${p.id}">Editar</button>
-            <button class="eliminar" data-id="${p.id}">Eliminar</button>
             </td>
         `;
 
-        //boton votar pelicula
+        /**
+         * Evento para votar una pelicula y actualizar su puntuacion
+         */
+        //añade un evento al boton votar
         fila.querySelector('.votar').addEventListener('click', ()=>{
-            const voto=prompt(`Introduce tu puntuación (0-100):`);
+            const voto=prompt(`Introduce tu puntuación (0-10):`);
             const valor=parseInt(voto);
             try{
+                //valida que la puntuacion este entre 0 y 10
+              if (isNaN(valor) || valor < 0 || valor > 10) {
+                throw new Error('Puntuación inválida. Debe ser un número entre 0 y 10.');
+              }
+              //registra el voto, guarda los cambios y actualiza la tabla
                 p.votar(valor);
                 guardarPeliculas(peliculas);
                 mostrarListadoPeliculas();
+            
+            //si hay error lo muestra con alert
             }catch(error){
                 alert(error.message);
             }
         });
-
-
-       // Botón editar película
-    fila.querySelector('.editar').addEventListener('click', () => {
-      const id = parseInt(fila.querySelector('.editar').dataset.id);
-      editarPelicula(id);
-    });
-
-    // Botón eliminar película
-    fila.querySelector('.eliminar').addEventListener('click', () => {
-      const id = parseInt(fila.querySelector('.eliminar').dataset.id);
-      if (confirm('¿Seguro que deseas eliminar esta película?')) {
-        peliculas = peliculas.filter(p => p.id !== id);
-        guardarPeliculas(peliculas);
-        mostrarListadoPeliculas();
-      }
-    });
-
+    
     tbody.appendChild(fila);
   });
 }
 
-/**
- * Permite editar una película existente
- * @param {number} id - ID de la película a editar
- */
-function editarPelicula(id) {
-  const pelicula = peliculas.find(p => p.id === id);
-  if (!pelicula) return alert('Película no encontrada');
-
-  const nuevoTitulo = prompt('Nuevo título:', pelicula.titulo);
-  const nuevaPopularidad = parseInt(prompt('Nueva popularidad (0-100):', pelicula.popularidad));
-  const nuevosGeneros = prompt(
-    'Introduce los IDs de los géneros separados por comas:',
-    pelicula.generos.join(',')
-  )
-    .split(',')
-    .map(num => parseInt(num.trim()))
-    .filter(num => !isNaN(num));
-
-  try {
-    pelicula.titulo = nuevoTitulo;
-    pelicula.popularidad = nuevaPopularidad;
-    pelicula.generos = nuevosGeneros;
-    guardarPeliculas(peliculas);
-    mostrarListadoPeliculas();
-  } catch (error) {
-    alert(error.message);
-  }
-}
-    
