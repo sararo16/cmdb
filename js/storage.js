@@ -29,7 +29,7 @@ export function inicializarDatos() {
   }
 
   //lee las peliculas guardadas
-  const peliculas = JSON.parse(localStorage.getItem('cmdb_peliculas'));;
+const peliculas = JSON.parse(localStorage.getItem('cmdb_peliculas') || '[]');
   //si el array esta vacio se cargan las peliculas por defecto
   if (peliculas.length === 0) {
     //creamos loas peliculas con sus generos asociados
