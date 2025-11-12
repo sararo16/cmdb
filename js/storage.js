@@ -13,6 +13,8 @@ const CLAVE_GENEROS = 'cmdb_generos';
 /**
  * Inicializa los datos en localStorage si estan vacios
  * Carga generos y peliculas por defecto
+ * @function
+ * @returns {void}
  */
 export function inicializarDatos() {
   //lee los generos guardados en localstorage si no hay nada devuelve null
@@ -29,8 +31,7 @@ export function inicializarDatos() {
   }
 
   //lee las peliculas guardadas
-  const peliculas = JSON.parse(localStorage.getItem('cmdb_peliculas'));;
-  //si el array esta vacio se cargan las peliculas por defecto
+  const peliculas = JSON.parse(localStorage.getItem('cmdb_peliculas') || '[]');  //si el array esta vacio se cargan las peliculas por defecto
   if (peliculas.length === 0) {
     //creamos loas peliculas con sus generos asociados
     const iniciales = [
@@ -47,7 +48,9 @@ export function inicializarDatos() {
 
 /**
  * Guarda un array de películas en LocalStorage (solo datos planos)
+ * @function
  * @param {Pelicula[]} peliculas
+ * @returns {void}
  */
 export function guardarPeliculas(peliculas) {
   //convierte cada pelicula en un objeto plano para guardarlo como JSON
@@ -65,6 +68,7 @@ export function guardarPeliculas(peliculas) {
 
 /**
  * Carga las películas desde LocalStorage y reconstruye instancias
+ * @function
  * @returns {Pelicula[]}
  */
 export function cargarPeliculas() {
@@ -104,7 +108,9 @@ export function cargarPeliculas() {
 
 /**
  * Guarda un array de géneros en LocalStorage (solo datos planos)
+ * @function
  * @param {Genero[]} generos
+ * @returns {void}
  */
 //convierte los generos en datos planos y los guarda en localstorage
 export function guardarGeneros(generos) {
@@ -117,6 +123,7 @@ export function guardarGeneros(generos) {
 
 /**
  * Carga los géneros desde LocalStorage y reconstruye instancias
+ * @function
  * @returns {Genero[]}
  */
 //recupera los generos guardados

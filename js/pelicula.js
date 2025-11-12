@@ -1,7 +1,8 @@
 /**
  * Clase que representa una película en la base de datos
  * Cada pelicula tiene un ID unico, titulo, fecha de estreno, popularidad y generos
- */
+ * @class
+*/
 
 export class Pelicula {
     /**
@@ -14,6 +15,7 @@ export class Pelicula {
     
     /**
      * Crea una nueva instancia de pelicula
+     * @constructor
     * @param {string} titulo - Título de la película
     * @param {Date} fechaEstreno - Fecha de estreno
     * @param {number} popularidad - Valor entre 0 y 100

@@ -1,6 +1,7 @@
 /**
  * Clase que representa un género cinematográfico
  * Cada género tiene un nombre y un ID único autoincremental.
+ * @class
  */
 
 export class Genero {
@@ -14,6 +15,7 @@ export class Genero {
 
     /**
      * Crea una nueva instancia de Genero
+     * @constructor
      * @param {string} nombre - Nombre del género
      * @throws {Error} Si el nombre no es válido
      */

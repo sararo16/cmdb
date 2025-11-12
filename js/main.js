@@ -11,7 +11,9 @@ import {
 
 //inicializar datos (cargar por defecto si localStorage esta vacio)
 inicializarDatos();
+/** @type {Pelicula[]} */
 let peliculas = cargarPeliculas();
+/** @type {Genero[]} */
 let generos = cargarGeneros();
 
 //Asignar eventos de navegación a los botones del menu
@@ -22,6 +24,8 @@ document.getElementById('btnListado').addEventListener('click', mostrarListadoPe
 /**
  * Muestra el formulario para añadir géneros (CRUD)
  * Valida que el nombre no este vacio ni duplicado
+ * @function
+ * @returns {void}
  */
 function mostrarGeneros(){
     const main=document.getElementById('contenido');
@@ -45,6 +49,8 @@ function mostrarGeneros(){
 
     /**
      * Evento para añadir un nuevo genero al enviar el formulario
+     * @event submit
+     * @param {Event} e - Evento de envío del formulario
      */
     document.getElementById('form-genero').addEventListener('submit',e =>{
         e.preventDefault(); //evita que se recargue la pagina
@@ -72,6 +78,8 @@ function mostrarGeneros(){
 /**
  * Muestra el formulario para añadir una nueva película
  * Valida los campos y evita títulos duplicados
+ * @function
+ * @returns {void}
  */
 function mostrarFormularioPeliculas(){
     //funcion que se ejecuta cuadno el usuario quiere añadir una nueva pelicula
@@ -106,6 +114,8 @@ function mostrarFormularioPeliculas(){
 
     /**
      * Evento para añadir una nueva pelicula al formulario
+     * @event submit
+     * @param {Event} e - Evento de envío del formulario
      */
     document.getElementById('form-pelicula').addEventListener('submit', e=>{
         e.preventDefault();//evita que se recargue la pagina
@@ -136,6 +146,8 @@ function mostrarFormularioPeliculas(){
     /**
     * Muestra el listado de películas registradas
     * Permite votar cada pelicula y actualiza la puntuacion media
+    * @function
+    * @returns {void}
     */
 function mostrarListadoPeliculas(){
     //inserta una tabla en el HTML para mostrar las peliculas
@@ -188,6 +200,7 @@ function mostrarListadoPeliculas(){
 
         /**
          * Evento para votar una pelicula y actualizar su puntuacion
+         * @event click
          */
         //añade un evento al boton votar
         fila.querySelector('.votar').addEventListener('click', ()=>{
