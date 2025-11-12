@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {Pelicula} from './pelicula.js'; //importa clase pelicula
+import {Genero} from './genero.js'; //importa clase genero
+//importamos funciones para guardar/cargar datos en localStorage
+import {
+    guardarPeliculas,
+    cargarPeliculas,
+    guardarGeneros,
+    cargarGeneros,
+    inicializarDatos
+} from './storage.js';
+
+//inicializar datos (cargar por defecto si localStorage esta vacio)
+inicializarDatos();
+/** @type {Pelicula[]} */
+let peliculas = cargarPeliculas();
+/** @type {Genero[]} */
+let generos = cargarGeneros();
+
+//Asignar eventos de navegación a los botones del menu
+document.getElementById('btnGeneros').addEventListener('click', mostrarGeneros);
+document.getElementById('btnPeliculas').addEventListener('click', mostrarFormularioPeliculas);
+document.getElementById('btnListado').addEventListener('click', mostrarListadoPeliculas);
+
+/**
+ * Muestra el formulario para añadir géneros (CRUD)
+ * Valida que el nombre no este vacio ni duplicado
+ * @function
+ * @returns {void}
+ */
+function mostrarGeneros(){
+    const main=document.getElementById('contenido');
+    main.innerHTML=`
+    &lt;h2>Gestión de géneros&lt;/h2>
+    &lt;form id="form-genero">
+        &lt;label for="nombre-genero">Nombre del género:&lt;/label>
+        &lt;input type="text" id="nombre-genero" maxlength="100" required>
+        &lt;button type="submit">Añadir género&lt;/button>
+    &lt;/form>
+    &lt;ul id="lista-generos">&lt;/ul> `;
+
+    const ul=document.getElementById('lista-generos');
+    ul.innerHTML='';
+
+    generos.forEach(g=>{
+        const li=document.createElement('li');
+        li.textContent=`${g.id} - ${g.nombre}`;
+        ul.appendChild(li);
+    });
+
+    /**
+     * Evento para añadir un nuevo genero al enviar el formulario
+     * @event submit
+     * @param {Event} e - Evento de envío del formulario
+     */
+    document.getElementById('form-genero').addEventListener('submit',e =>{
+        e.preventDefault(); //evita que se recargue la pagina
+        try{
+            const nombre=document.getElementById('nombre-genero').value.trim(); //lee el valor y lo limpia
+            //validaciones vacio y mismo nombre
+            if (!nombre) throw new Error('El nombre del género no puede estar vacío');
+
+            const existe=generos.some (g=>g.nombre.toLowerCase()===nombre.toLowerCase());
+            if (existe) throw new Error ('Ya existe un género con ese nombre');
+
+            //crea un nuevo objeto (genero), lo añade al array, lo guarda en localstorage y vuelve a llamar la funcion para refrescar la lista
+            const nuevo=new Genero (nombre);
+            generos.push (nuevo);
+            guardarGeneros(generos);
+            mostrarGeneros();
+
+        //si hay error se muestra con alert
+        }catch(error){
+            alert (error.message);
+        }
+    });
+}
+
+/**
+ * Muestra el formulario para añadir una nueva película
+ * Valida los campos y evita títulos duplicados
+ * @function
+ * @returns {void}
+ */
+function mostrarFormularioPeliculas(){
+    //funcion que se ejecuta cuadno el usuario quiere añadir una nueva pelicula
+    const main=document.getElementById('contenido');
+    main.innerHTML=`
+    &lt;h2>Añadir nueva película&lt;/h2>
+    &lt;form id="form-pelicula">
+        &lt;label for="titulo">Título:&lt;/label>
+        &lt;input type="text" id="titulo" maxlength="100" required>
+
+        &lt;label for ="fecha">Fecha de estreno:&lt;/label>
+        &lt;input type="date" id="fecha" required>
+
+        &lt;label for="popularidad">Popularidad (0-100):&lt;/label>
+        &lt;input type="number" id="popularidad" min="0" max="100" required>
+
+        &lt;label for="generos">Género:&lt;/label>
+        &lt;select id="generos" multiple required>&lt;/select>
+
+        &lt;button type="submit">Añadir película&lt;/button>
+    &lt;/form>`;
+
+    //busca el select en el formulario
+    const select=document.getElementById ('generos');
+    //recorre el array creando una opcion, pone el id, texto en nombre y se añade
+    generos.forEach(g=>{
+        const option=document.createElement('option');
+        option.value=g.id;
+        option.textContent=g.nombre;
+        select.appendChild(option);
+    });
+
+    /**
+     * Evento para añadir una nueva pelicula al formulario
+     * @event submit
+     * @param {Event} e - Evento de envío del formulario
+     */
+    document.getElementById('form-pelicula').addEventListener('submit', e=>{
+        e.preventDefault();//evita que se recargue la pagina
+
+        try{
+            const titulo=document.getElementById('titulo').value;
+            const fecha=new Date(document.getElementById('fecha').value); //convierte la fecha del input en un objeto date
+            const popularidad=parseInt(document.getElementById('popularidad').value);
+            const seleccionados=Array.from(select.selectedOptions).map(opt=>parseInt(opt.value)); //los generos seleccionados los comvierte en un array de IDs
+            //verifica si ya existe una pelicula con ese titulo
+            const existe=peliculas.some(p=>p.titulo.toLowerCase()===titulo.toLowerCase());
+            if (existe) throw new Error ('Ya existe una película con ese título');
+
+            //se crea una nueva instancia de la clase pelicula
+            const nueva=new Pelicula(titulo, fecha, popularidad, seleccionados);
+            //añade la pelicula al array
+            peliculas.push(nueva);
+            guardarPeliculas(peliculas); //se guarda el array actualizado
+            alert('Película añadida correctamente');
+            mostrarListadoPeliculas();
+        //si ocurre un error se muestra con un alert
+        }catch(error){
+            alert(error.message);
+        }
+    });
+}
+
+    /**
+    * Muestra el listado de películas registradas
+    * Permite votar cada pelicula y actualiza la puntuacion media
+    * @function
+    * @returns {void}
+    */
+function mostrarListadoPeliculas(){
+    //inserta una tabla en el HTML para mostrar las peliculas
+    const main=document.getElementById('contenido');
+    main.innerHTML=`
+    &lt;h2>Listado de películas&lt;/h2>
+    &lt;table>
+        &lt;thead>
+            &lt;tr>
+                &lt;th>ID&lt;/th>
+                &lt;th>Título&lt;/th>
+                &lt;th>Fecha&lt;/th>
+                &lt;th>Popularidad&lt;/th>
+                &lt;th>Géneros&lt;/th>
+                &lt;th>Puntuación&lt;/th>
+                &lt;th>Votos&lt;/th>
+                &lt;th>Acciones&lt;/th>
+            &lt;/tr>
+        &lt;/thead>
+        &lt;tbody id="tabla-body">&lt;/tbody>
+    &lt;/table>`;
+
+    //limpia el cuerpo de la tabla para volver a mostrarlo
+    const tbody=document.getElementById('tabla-body');
+    tbody.innerHTML='';
+
+    //por cada pelicula crea una fila en la tabla
+    peliculas.forEach(p=>{
+        const fila=document.createElement('tr');
+
+        //convierte los IDs de generos en nombres legibles, separados por comas
+        const nombresGeneros=p.generos.map(id=>{
+            const g=generos.find(gen=>gen.id===id);
+            return g ? g.nombre : 'Desconocido';
+        }).join(', ');
+
+        //se llena la fila con los datos de la pelicula
+        fila.innerHTML=`
+            &lt;td>${p.id}&lt;/td>
+            &lt;td>${p.titulo}&lt;/td>
+            &lt;td>${p.fechaEstreno.toLocaleDateString()}&lt;/td>
+            &lt;td>${p.popularidad}&lt;/td>
+            &lt;td>${nombresGeneros}&lt;/td>
+            &lt;td>${p.puntuacion}&lt;/td>
+            &lt;td>${p.numeroVotos}&lt;/td>
+            &lt;td>
+            &lt;button class="votar" data-id="${p.id}">Votar&lt;/button>
+            &lt;/td>
+        `;
+
+        /**
+         * Evento para votar una pelicula y actualizar su puntuacion
+         * @event click
+         */
+        //añade un evento al boton votar
+        fila.querySelector('.votar').addEventListener('click', ()=>{
+            const voto=prompt(`Introduce tu puntuación (0-10):`);
+            const valor=parseInt(voto);
+            try{
+                //valida que la puntuacion este entre 0 y 10
+              if (isNaN(valor) || valor &lt; 0 || valor > 10) {
+                throw new Error('Puntuación inválida. Debe ser un número entre 0 y 10.');
+              }
+              //registra el voto, guarda los cambios y actualiza la tabla
+                p.votar(valor);
+                guardarPeliculas(peliculas);
+                mostrarListadoPeliculas();
+            
+            //si hay error lo muestra con alert
+            }catch(error){
+                alert(error.message);
+            }
+        });
+    
+    tbody.appendChild(fila);
+  });
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Genero.html">Genero</a></li><li><a href="Pelicula.html">Pelicula</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:click">click</a></li><li><a href="global.html#event:submit">submit</a></li></ul><h3>Global</h3><ul><li><a href="global.html#cargarGeneros">cargarGeneros</a></li><li><a href="global.html#cargarPeliculas">cargarPeliculas</a></li><li><a href="global.html#generos">generos</a></li><li><a href="global.html#guardarGeneros">guardarGeneros</a></li><li><a href="global.html#guardarPeliculas">guardarPeliculas</a></li><li><a href="global.html#inicializarDatos">inicializarDatos</a></li><li><a href="global.html#mostrarFormularioPeliculas">mostrarFormularioPeliculas</a></li><li><a href="global.html#mostrarGeneros">mostrarGeneros</a></li><li><a href="global.html#mostrarListadoPeliculas">mostrarListadoPeliculas</a></li><li><a href="global.html#peliculas">peliculas</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Nov 12 2025 09:27:06 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
