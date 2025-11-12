@@ -108,11 +108,11 @@ export function cargarPeliculas() {
 
 /**
  * Guarda un array de géneros en LocalStorage (solo datos planos)
+ * convierte los generos en datos planos y los guarda en localstorage
  * @function
- * @param {Genero[]} generos
+ * @param {Genero[]} generos - Array de géneros a guardar
  * @returns {void}
  */
-//convierte los generos en datos planos y los guarda en localstorage
 export function guardarGeneros(generos) {
   const datos = generos.map(g => ({
     _id: g.id,
