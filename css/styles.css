@@ -86,9 +86,10 @@ table {
 
 /* Celdas de la tabla */
 th, td {
-    padding: 1rem;; /* Espaciado interno */
-    border-bottom: 1px solid #333; /* Línea divisoria entre filas */
-    text-align: left; /* Alineación del texto a la izquierda */
+    padding: 1rem;
+    border-bottom: 1px solid #333; 
+    text-align: left;
+    vertical-align: middle; 
 }
 
 /* Encabezados de la tabla */

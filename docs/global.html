@@ -456,6 +456,316 @@
     
 
     
+    <h4 class="name" id="editarGenero"><span class="type-signature"></span>editarGenero<span class="signature">(id)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Permite editar el nombre de un género existente.Solicita el nuevo nombre mediante prompt y actualiza el almacenamiento.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Identificador del género a modificar.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line109">line 109</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="eliminarPelicula"><span class="type-signature"></span>eliminarPelicula<span class="signature">(id)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Elimina una película del sistema por su ID.Actualiza el array local y el LocalStorage.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Identificador de la película a eliminar.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line329">line 329</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="guardarGeneros"><span class="type-signature"></span>guardarGeneros<span class="signature">(generos)</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
@@ -872,6 +1182,161 @@
     
 
     
+    <h4 class="name" id="intentarBorrarGenero"><span class="type-signature"></span>intentarBorrarGenero<span class="signature">(id)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Intenta eliminar un género del sistema.Valida que no existan películas asociadas a ese género antes de borrarlo.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Identificador del género a eliminar.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line133">line 133</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="mostrarFormularioPeliculas"><span class="type-signature"></span>mostrarFormularioPeliculas<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
@@ -880,7 +1345,7 @@
 
 
 <div class="description">
-    Muestra el formulario para añadir una nueva películaValida los campos y evita títulos duplicados
+    Muestra el formulario para añadir una nueva película.Valida los campos, carga el selector de géneros y gestiona el alta evitando duplicados.
 </div>
 
 
@@ -924,7 +1389,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line84">line 84</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line158">line 158</a>
     </li></ul></dd>
     
 
@@ -986,7 +1451,7 @@
 
 
 <div class="description">
-    Muestra el formulario para añadir géneros (CRUD)Valida que el nombre no este vacio ni duplicado
+    Muestra el formulario para añadir géneros (CRUD)Renderiza el formulario de alta y la lista de generos con opciones de edición y borrado
 </div>
 
 
@@ -1092,7 +1557,7 @@
 
 
 <div class="description">
-    Muestra el listado de películas registradasPermite votar cada pelicula y actualiza la puntuacion media
+    Renderiza la tabla con el listado completo de películas.Incluye botones para votar y eliminar cada película.CORREGIDO: Usa un div interno para no romper los bordes de la tabla.
 </div>
 
 
@@ -1136,7 +1601,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line152">line 152</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line235">line 235</a>
     </li></ul></dd>
     
 
@@ -1191,94 +1656,6 @@
 
     
         <h3 class="subsection-title">Events</h3>
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="event:click">click</h4>
-    
-
-    
-
-
-
-<div class="description">
-    Evento para votar una pelicula y actualizar su puntuacion
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line201">line 201</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         
             
@@ -1387,7 +1764,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line50">line 50</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line75">line 75</a>
     </li></ul></dd>
     
 
@@ -1431,7 +1808,7 @@
 
 
 <div class="description">
-    Evento para añadir una nueva pelicula al formulario
+    Evento para procesar el formulario de nueva película
 </div>
 
 
@@ -1524,7 +1901,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line115">line 115</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line190">line 190</a>
     </li></ul></dd>
     
 
@@ -1566,13 +1943,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Genero.html">Genero</a></li><li><a href="Pelicula.html">Pelicula</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:click">click</a></li><li><a href="global.html#event:submit">submit</a></li></ul><h3>Global</h3><ul><li><a href="global.html#cargarGeneros">cargarGeneros</a></li><li><a href="global.html#cargarPeliculas">cargarPeliculas</a></li><li><a href="global.html#generos">generos</a></li><li><a href="global.html#guardarGeneros">guardarGeneros</a></li><li><a href="global.html#guardarPeliculas">guardarPeliculas</a></li><li><a href="global.html#inicializarDatos">inicializarDatos</a></li><li><a href="global.html#mostrarFormularioPeliculas">mostrarFormularioPeliculas</a></li><li><a href="global.html#mostrarGeneros">mostrarGeneros</a></li><li><a href="global.html#mostrarListadoPeliculas">mostrarListadoPeliculas</a></li><li><a href="global.html#peliculas">peliculas</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Genero.html">Genero</a></li><li><a href="Pelicula.html">Pelicula</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:submit">submit</a></li></ul><h3>Global</h3><ul><li><a href="global.html#cargarGeneros">cargarGeneros</a></li><li><a href="global.html#cargarPeliculas">cargarPeliculas</a></li><li><a href="global.html#editarGenero">editarGenero</a></li><li><a href="global.html#eliminarPelicula">eliminarPelicula</a></li><li><a href="global.html#generos">generos</a></li><li><a href="global.html#guardarGeneros">guardarGeneros</a></li><li><a href="global.html#guardarPeliculas">guardarPeliculas</a></li><li><a href="global.html#inicializarDatos">inicializarDatos</a></li><li><a href="global.html#intentarBorrarGenero">intentarBorrarGenero</a></li><li><a href="global.html#mostrarFormularioPeliculas">mostrarFormularioPeliculas</a></li><li><a href="global.html#mostrarGeneros">mostrarGeneros</a></li><li><a href="global.html#mostrarListadoPeliculas">mostrarListadoPeliculas</a></li><li><a href="global.html#peliculas">peliculas</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Nov 12 2025 09:27:06 GMT+0100 (hora estándar de Europa central)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Dec 06 2025 09:41:39 GMT+0100 (hora estándar de Europa central)
 </footer>
 
 <script> prettyPrint(); </script>
